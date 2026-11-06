@@ -4,6 +4,9 @@ This module is the original Emag Marketplace developed by Zitec, updated to supp
 
 Change Log:
 
+1.2.0 - Order polling: before each import the new eMAG orders (status 1) are read and the ones the callback
+missed are queued. Order Settings > Check New Orders in eMAG (default Yes).
+
 1.1.0 - Security hardening:
 
 - The order callback needs a secret key: `<base url>emagmarketplace/order/ping/key/<key>/` (404 otherwise).
