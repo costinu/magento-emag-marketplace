@@ -4,6 +4,26 @@ This module is the original Emag Marketplace developed by Zitec, updated to supp
 
 Change Log:
 
+1.1.0 - Security hardening:
+
+- The order callback needs a secret key: `<base url>emagmarketplace/order/ping/key/<key>/` (404 otherwise).
+  The key is generated on install / upgrade; copy the URL from Stores > Configuration > eMAG Marketplace >
+  Order Settings > Order Callback URL into eMAG (Profile > Technical details). **After upgrading, update the
+  callback URL in eMAG**, the old one no longer works.
+- Order import: batch per cron run, each queue item saved separately, queue limit for the callback, the queue no
+  longer stores the full eMAG response (customer data). Alert e-mails limited per hour and escaped. API timeouts
+  10 s / 120 s instead of 600 s.
+- AWB PDFs are kept in `var/zitec_emkp/awb/` and downloaded through the admin (they were public under
+  `pub/media/awb/` with sequential names; the old files are deleted). Invoices get random file names
+  (`pub/media/zitec_emkp/invoices/`) and must be real PDFs. Invoices uploaded before keep their old public URLs.
+- The API password is stored encrypted (existing values are encrypted on upgrade); API username, password and
+  callback key are sensitive config values.
+- API request log is off by default; when enabled, customer data is masked and logs older than the retention
+  (default 14 days) are deleted.
+- No more global preference for `Magento\Eav\Model\Entity\Attribute\Source\Table` (it HTML-escaped every
+  option label in the store).
+- ACL resources for AWBs, invoices and localities; the config ACL resources are declared; escaped admin output.
+
 1.0.4 - PHP 8.4 / Magento 2.4.9 compatibility:
 
 - Explicit nullable types for parameters defaulting to null (implicit nullable is deprecated in PHP 8.4).
