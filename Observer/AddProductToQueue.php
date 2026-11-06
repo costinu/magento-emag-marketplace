@@ -11,8 +11,8 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Message\ManagerInterface;
-use Magento\Indexer\Model\Indexer\State as IndexerState;
 use Psr\Log\LoggerInterface;
+use Zitec\EmagMarketplace\Model\Config;
 use Zitec\EmagMarketplace\Model\MappingManager;
 use Zitec\EmagMarketplace\Model\ProductAttributes;
 use Zitec\EmagMarketplace\Model\Queue\Product\Manager;
@@ -64,6 +64,11 @@ class AddProductToQueue implements ObserverInterface
     protected $productResourceModel;
 
     /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
      * AddProductToQueue constructor.
      * @param Manager $productQueueManager
      * @param ManagerInterface $messageManager
@@ -72,6 +77,7 @@ class AddProductToQueue implements ObserverInterface
      * @param ProductRepositoryInterface $productRepository
      * @param CollectionFactory $productCollectionFactory
      * @param ProductResourceModel $productResourceModel
+     * @param Config $config
      */
     public function __construct(
         Manager $productQueueManager,
@@ -80,8 +86,10 @@ class AddProductToQueue implements ObserverInterface
         LoggerInterface $logger,
         ProductRepositoryInterface $productRepository,
         CollectionFactory $productCollectionFactory,
-        ProductResourceModel $productResourceModel
+        ProductResourceModel $productResourceModel,
+        Config $config
     ) {
+        $this->config = $config;
         $this->productQueueManager = $productQueueManager;
         $this->messageManager = $messageManager;
         $this->state = $state;
@@ -96,6 +104,12 @@ class AddProductToQueue implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
+        // Nothing to synchronise (and no product loads on every order / product save) until the
+        // eMAG API credentials are configured.
+        if (!$this->config->isApiConfigured()) {
+            return;
+        }
+
         try {
             $areaCode = $this->state->getAreaCode();
         } catch (LocalizedException $exception) {
@@ -191,27 +205,6 @@ class AddProductToQueue implements ObserverInterface
                         $response[] = $this->productRepository->getById($productId);
                     }
                 }
-                break;
-
-            case 'clean_cache_by_tags':
-                $response = [];
-
-                /** @var IndexerState $indexer */
-                $indexer = $observer->getObject();
-
-                if ($indexer instanceof IndexerState && $indexer->getIndexerId() === 'catalog_product_price') {
-                    $response = $this->productCollectionFactory->create()
-                        ->addAttributeToSelect('*')
-                        ->addFieldToFilter(ProductAttributes::IS_VISIBLE, 1)
-                        ->addFieldToFilter('special_price', ['gt' => 0]);
-                }
-                break;
-
-            case 'clean_cache_after_reindex':
-                $response = $this->productCollectionFactory->create()
-                    ->addAttributeToSelect('*')
-                    ->addFieldToFilter(ProductAttributes::IS_VISIBLE, 1)
-                    ->addFieldToFilter('special_price', ['gt' => 0]);
                 break;
 
             default:

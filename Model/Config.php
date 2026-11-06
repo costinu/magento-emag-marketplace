@@ -352,6 +352,16 @@ class Config
     }
 
     /**
+     * API URL, username and password are set (default scope).
+     *
+     * @return bool
+     */
+    public function isApiConfigured(): bool
+    {
+        return $this->getApiUrl() !== '' && $this->getApiUsername() !== '' && $this->getApiPassword() !== '';
+    }
+
+    /**
      * @return bool
      */
     public function isOrderPollingEnabled(): bool

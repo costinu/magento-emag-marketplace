@@ -31,16 +31,6 @@
                   instance="Zitec\EmagMarketplace\Observer\AddProductToQueue"/>
     </event>
 
-    <event name="clean_cache_by_tags">
-        <observer name="emkp_add_special_price_products_to_queue_by_tags_reindex"
-                  instance="Zitec\EmagMarketplace\Observer\AddProductToQueue"/>
-    </event>
-
-    <event name="clean_cache_after_reindex">
-        <observer name="emkp_add_special_price_products_to_queue_after_reindex"
-                  instance="Zitec\EmagMarketplace\Observer\AddProductToQueue"/>
-    </event>
-
     <event name="sales_order_save_before">
         <observer name="emkp_sales_order_save_before_edit_emag_order"
                   instance="Zitec\EmagMarketplace\Observer\EditEmagOrder"/>
