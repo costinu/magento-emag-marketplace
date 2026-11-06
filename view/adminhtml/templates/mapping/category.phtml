@@ -1,24 +1,25 @@
 <?php /** @var \Zitec\EmagMarketplace\Block\Adminhtml\Mapping\Edit\Category\Category $block */ ?>
+<?php /** @var \Magento\Framework\Escaper $escaper */ ?>
 
-<input type="hidden" class="js-emkp-mapping-input" name="id" value="<?= $this->getMappingId(); ?>">
+<input type="hidden" class="js-emkp-mapping-input" name="id" value="<?= $escaper->escapeHtmlAttr($this->getMappingId()) ?>">
 
 <div class="admin__field _required emkp-admin__field" data-index="emag_category_id">
     <label class="admin__field-label emkp-admin__field-label" for="emag_category_id">
-        <span><?= __('Emag Category:') ?></span>
+        <span><?= $escaper->escapeHtml(__('Emag Category:')) ?></span>
     </label>
     <div class="admin__field-control emkp-admin__field-control">
         <select class="admin__control-select js-emkp-mapping-input" name="emag_category_id" id="emag_category_id"
                 aria-describedby="notice-emag_category_id" required>
-            <option data-title="<?= __('Select category'); ?>" value="0" disabled
+            <option data-title="<?= $escaper->escapeHtmlAttr(__('Select category')) ?>" value="0" disabled
                     <?php if (!$this->getEmagCategoryId()){ ?>selected<?php } ?>>
-                <?= __('Select category'); ?>
+                <?= $escaper->escapeHtml(__('Select category')) ?>
             </option>
 
             <?php foreach ($this->getEmagCategories() as $emagCategory) { ?>
-                <option data-title="<?= $emagCategory->getName(); ?>" value="<?= $emagCategory->getId(); ?>"
+                <option data-title="<?= $escaper->escapeHtmlAttr($emagCategory->getName()) ?>" value="<?= $escaper->escapeHtmlAttr($emagCategory->getId()) ?>"
                         <?php if ($this->getEmagCategoryId() == $emagCategory->getId()){ ?>selected<?php } ?>
                 >
-                    <?= $emagCategory->getName(); ?>
+                    <?= $escaper->escapeHtml($emagCategory->getName()) ?>
                 </option>
             <?php } ?>
         </select>
@@ -27,21 +28,21 @@
 
 <div class="admin__field _required emkp-admin__field" data-index="magento_category_id">
     <label class="admin__field-label emkp-admin__field-label" for="magento_category_id">
-        <span><?= __('Magento Category:') ?></span>
+        <span><?= $escaper->escapeHtml(__('Magento Category:')) ?></span>
     </label>
     <div class="admin__field-control emkp-admin__field-control">
         <select class="admin__control-select js-emkp-mapping-input" name="magento_category_id" id="magento_category_id"
                 aria-describedby="notice-magento_category_id" required>
-            <option data-title="<?= __('Select category'); ?>" value="0" disabled
+            <option data-title="<?= $escaper->escapeHtmlAttr(__('Select category')) ?>" value="0" disabled
                     <?php if (!$this->getMagentoCategoryId()){ ?>selected<?php } ?>>
-                <?= __('Select category'); ?>
+                <?= $escaper->escapeHtml(__('Select category')) ?>
             </option>
             <?php foreach ($this->getMagentoCategories() as $magentoCategory) { ?>
-                <option data-title="<?= $magentoCategory['label']; ?>" value="<?= $magentoCategory['value']; ?>"
+                <option data-title="<?= $escaper->escapeHtmlAttr($magentoCategory['label']) ?>" value="<?= $escaper->escapeHtmlAttr($magentoCategory['value']) ?>"
                     <?php if ($magentoCategory['disabled'] && $this->getMagentoCategoryId() != $magentoCategory['value']) { ?> disabled<?php } ?>
                         <?php if ($this->getMagentoCategoryId() == $magentoCategory['value']){ ?>selected<?php } ?>
                 >
-                    <?= $magentoCategory['label']; ?>
+                    <?= $escaper->escapeHtml($magentoCategory['label']) ?>
                 </option>
             <?php } ?>
         </select>

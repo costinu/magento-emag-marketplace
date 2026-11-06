@@ -5,6 +5,7 @@ namespace Zitec\EmagMarketplace\Controller\Adminhtml\Mapping;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\Escaper;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Psr\Log\LoggerInterface;
 use Zitec\EmagMarketplace\Api\CharacteristicRepositoryInterface;
@@ -33,6 +34,11 @@ class Characteristicsvalues extends Action
     protected $characteristicRepository;
 
     /**
+     * @var Escaper
+     */
+    protected $escaper;
+
+    /**
      * Characteristicsvalues constructor.
      * @param Context $context
      * @param LoggerInterface $logger
@@ -43,9 +49,11 @@ class Characteristicsvalues extends Action
         Context $context,
         LoggerInterface $logger,
         CharacteristicRepositoryInterface $characteristicRepository,
-        JsonFactory $jsonFactory
+        JsonFactory $jsonFactory,
+        Escaper $escaper
     ) {
         parent::__construct($context);
+        $this->escaper = $escaper;
 
         $this->jsonFactory = $jsonFactory;
         $this->logger = $logger;
@@ -77,8 +85,12 @@ class Characteristicsvalues extends Action
             $results = __('No values found');
 
             if ($values = $characteristic->getValues()) {
-                $valuesArray = json_decode($values);
-                $results = implode('<br />', $valuesArray);
+                // Shown as HTML in the admin modal; the values come from eMAG.
+                $valuesArray = (array)json_decode($values, true);
+                $results = implode('<br />', array_map(
+                    fn ($value) => $this->escaper->escapeHtml(is_scalar($value) ? (string)$value : json_encode($value)),
+                    $valuesArray
+                ));
             }
 
 
@@ -91,7 +103,9 @@ class Characteristicsvalues extends Action
         } catch (\Throwable $e) {
             return $result->setData([
                 'success' => false,
-                'message' => __('There has been a problem in retrieving characteristic values. ' . PHP_EOL . $e->getMessage()),
+                'message' => $this->escaper->escapeHtml(
+                    __('There has been a problem in retrieving characteristic values. %1', $e->getMessage())
+                ),
             ]);
         }
     }

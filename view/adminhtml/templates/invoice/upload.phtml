@@ -1,24 +1,22 @@
 <?php
+/** @var \Magento\Framework\Escaper $escaper */
 $currentOrderId = $this->getCurrentOrderId();
 $invoices = $this->getUploadedInvoicesByOrderId($currentOrderId);
 ?>
 <section class="admin__page-section order-view-invoice-upload-form">
     <div class="admin__field _required emkp-admin__field" data-index="emag_category_id">
-        <form action="<?php echo $this->getAjaxUploadInvoiceUrl() ?>" enctype="multipart/form-data" method="POST">
-            <input type='hidden' name="order_id" value="<?php echo $currentOrderId ?>"/>
-            <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>"/>
+        <form action="<?= $escaper->escapeUrl($this->getAjaxUploadInvoiceUrl()) ?>" enctype="multipart/form-data" method="POST">
+            <input type='hidden' name="order_id" value="<?= (int)$currentOrderId ?>"/>
+            <input name="form_key" type="hidden" value="<?= $escaper->escapeHtmlAttr($this->getFormKey()) ?>"/>
             <div class="admin__page-section-item-title">
-                <span class="title">Upload Invoice</span>
+                <span class="title"><?= $escaper->escapeHtml(__('Upload Invoice')) ?></span>
             </div>
             <div class="admin__field-control emkp-admin__field-control">
-                <input type='file' class="admin__control-file js-emkp-invoice-file-input" name="file"/>
+                <input type='file' accept="application/pdf,.pdf" class="admin__control-file js-emkp-invoice-file-input" name="file"/>
             </div>
             <div class="admin__field-control emkp-admin__field-control">
-                <button class="action primary"
-                        type="submit" title="<?php /* @escapeNotVerified */
-                echo __('Upload Invoice') ?>">
-            <span><?php /* @escapeNotVerified */
-                echo __('Upload Invoice') ?></span>
+                <button class="action primary" type="submit" title="<?= $escaper->escapeHtmlAttr(__('Upload Invoice')) ?>">
+                    <span><?= $escaper->escapeHtml(__('Upload Invoice')) ?></span>
                 </button>
             </div>
         </form>
@@ -28,7 +26,7 @@ $invoices = $this->getUploadedInvoicesByOrderId($currentOrderId);
 <section class="admin__page-section order-view-invoice-list">
     <div class="admin__page-section-item order-account-information">
         <div class="admin__page-section-item-title">
-            <span class="title"><?php echo __('Uploaded Invoices') ?></span>
+            <span class="title"><?= $escaper->escapeHtml(__('Uploaded Invoices')) ?></span>
             <div class="actions">
             </div>
         </div>
@@ -36,20 +34,15 @@ $invoices = $this->getUploadedInvoicesByOrderId($currentOrderId);
             <table class="admin__table-secondary order-account-information-table">
                 <tbody>
                 <?php foreach ($invoices as $invoice) : ?>
+                    <?php $pathArray = explode('/', (string)$invoice->getPath()); ?>
                     <tr>
                         <th>
-                            <?php $pathArray = explode('/', $invoice->getPath()); ?>
-                            <a target='_blank' href="<?php echo $invoice->getUrl(); ?>">
-                                <?php
-                                echo end($pathArray);
-                                ?>
+                            <a target="_blank" rel="noopener noreferrer" href="<?= $escaper->escapeUrl($invoice->getUrl()) ?>">
+                                <?= $escaper->escapeHtml(end($pathArray)) ?>
                             </a>
                         </th>
                         <td>
-                            <?php
-                            echo __('Upload date:') . ' ';
-                            echo $invoice->getCreatedAt();
-                            ?>
+                            <?= $escaper->escapeHtml(__('Upload date:') . ' ' . $invoice->getCreatedAt()) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

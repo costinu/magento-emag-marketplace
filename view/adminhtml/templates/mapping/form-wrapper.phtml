@@ -1,9 +1,10 @@
 <?php /** @var \Zitec\EmagMarketplace\Block\Adminhtml\Mapping\Edit\FormWrapper $this */ ?>
+<?php /** @var \Magento\Framework\Escaper $escaper */ ?>
 
 <?php if ($this->getType() === 'top') { ?>
     <script>
-        window.emkp_mapping_categories_url = '<?php echo $this->getCharacteristicsUrl(); ?>';
-        window.emkp_save_mapping_url = '<?php echo $this->getSaveUrl(); ?>'
+        window.emkp_mapping_categories_url = '<?= $escaper->escapeJs($this->getCharacteristicsUrl()) ?>';
+        window.emkp_save_mapping_url = '<?= $escaper->escapeJs($this->getSaveUrl()) ?>'
     </script>
 <form id="js-mapping-form">
     <?php } ?>

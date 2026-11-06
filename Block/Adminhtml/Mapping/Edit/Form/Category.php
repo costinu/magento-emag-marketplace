@@ -130,7 +130,7 @@ class Category extends Template
         array &$options,
         bool $withPrefix = false
     ) {
-        $repeater = '&nbsp;&nbsp;';
+        $repeater = "\u{00A0}\u{00A0}"; // non-breaking spaces (the label is escaped in the template)
 
         $options[] = [
             'label' => ($withPrefix ? str_repeat($repeater, $node->getLevel() * 1) : null) . $node->getName(),

@@ -1,5 +1,6 @@
 <div class="pp-buttons-container">
-    <button id="<?php echo $block->getId() ?>" data-url='<?php echo $block->getAjaxImportLocalitiesUrl() ?>'
+<?php /** @var \Magento\Framework\Escaper $escaper */ ?>
+    <button id="<?= $escaper->escapeHtmlAttr($block->getId()) ?>" data-url='<?= $escaper->escapeHtmlAttr($block->getAjaxImportLocalitiesUrl()) ?>'
             onclick="return false;">
         <span><span><span><?php echo $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
     </button>
