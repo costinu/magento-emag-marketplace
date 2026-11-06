@@ -12,6 +12,7 @@ use Magento\Framework\Registry;
 use Psr\Log\LoggerInterface;
 use Zitec\EmagMarketplace\Api\CharacteristicMappingRepositoryInterface;
 use Zitec\EmagMarketplace\Api\CharacteristicRepositoryInterface;
+use Zitec\EmagMarketplace\Model\AttributeText;
 use Zitec\EmagMarketplace\Model\Json;
 use Zitec\EmagMarketplace\Model\MappingManager;
 use Zitec\EmagMarketplace\Model\ProductAttributes;
@@ -63,6 +64,11 @@ class VerifyProductAllowedValues implements ObserverInterface
     protected $registry;
 
     /**
+     * @var AttributeText
+     */
+    protected $attributeText;
+
+    /**
      * VerifyProductAllowedValues constructor.
      * @param ManagerInterface $messageManager
      * @param State $state
@@ -72,6 +78,7 @@ class VerifyProductAllowedValues implements ObserverInterface
      * @param Attribute $eavAttributeResourceModel
      * @param CharacteristicRepositoryInterface $characteristicRepository
      * @param Registry $registry
+     * @param AttributeText $attributeText
      */
     public function __construct(
         ManagerInterface $messageManager,
@@ -81,8 +88,10 @@ class VerifyProductAllowedValues implements ObserverInterface
         CharacteristicMappingRepositoryInterface $characteristicMappingRepository,
         Attribute $eavAttributeResourceModel,
         CharacteristicRepositoryInterface $characteristicRepository,
-        Registry $registry
+        Registry $registry,
+        AttributeText $attributeText
     ) {
+        $this->attributeText = $attributeText;
         $this->messageManager = $messageManager;
         $this->state = $state;
         $this->logger = $logger;
@@ -141,7 +150,7 @@ class VerifyProductAllowedValues implements ObserverInterface
             switch ($attribute->getFrontendInput()) {
                 case 'select':
                 case 'multiselect':
-                    $value = $product->getAttributeText($attribute->getAttributeCode());
+                    $value = $this->attributeText->get($product, $attribute->getAttributeCode());
                     break;
                 case 'boolean':
                     $value = (int)$product->getData($attribute->getAttributeCode());

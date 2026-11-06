@@ -65,8 +65,6 @@
     <preference for="Zitec\EmagMarketplace\Api\AwbRepositoryInterface"
                 type="Zitec\EmagMarketplace\Model\AwbRepository"/>
 
-    <preference for="Magento\Eav\Model\Entity\Attribute\Source\Table"
-                type="Zitec\EmagMarketplace\Model\Entity\Attribute\Source\Table"/>
 
     <type name="Zitec\EmagMarketplace\Model\ResourceModel\CategoryMapping\Grid\Collection">
         <arguments>

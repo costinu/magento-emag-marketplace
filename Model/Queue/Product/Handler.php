@@ -27,6 +27,7 @@ use Zitec\EmagMarketplace\ApiWrapper\Requests\ProductOffer\CreateRequest;
 use Zitec\EmagMarketplace\Exception\ApiResponseErrorException;
 use Zitec\EmagMarketplace\Exception\MissingProductDataException;
 use Zitec\EmagMarketplace\Model\ApiClient;
+use Zitec\EmagMarketplace\Model\AttributeText;
 use Zitec\EmagMarketplace\Model\Config;
 use Zitec\EmagMarketplace\Model\MappingManager;
 use Zitec\EmagMarketplace\Model\ProductAttributes;
@@ -123,6 +124,11 @@ class Handler
     protected $scopeConfig;
 
     /**
+     * @var AttributeText
+     */
+    protected $attributeText;
+
+    /**
      * Handler constructor.
      *
      * @param Manager $queueManager
@@ -142,6 +148,7 @@ class Handler
      * @param StoreManagerInterface $storeManager
      * @param TaxCalculationInterface $taxCalculation
      * @param ScopeConfigInterface $scopeConfig
+     * @param AttributeText $attributeText
      */
     public function __construct(
         Manager $queueManager,
@@ -160,8 +167,10 @@ class Handler
         DateTime $dateTime,
         StoreManagerInterface $storeManager,
         TaxCalculationInterface $taxCalculation,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        AttributeText $attributeText
     ) {
+        $this->attributeText = $attributeText;
         $this->queueManager = $queueManager;
         $this->itemRepository = $itemRepository;
         $this->apiClient = $apiClient;
@@ -395,7 +404,7 @@ class Handler
             switch ($attribute->getFrontendInput()) {
                 case 'select':
                 case 'multiselect':
-                    $value = $product->getAttributeText($attribute->getAttributeCode());
+                    $value = $this->attributeText->get($product, $attribute->getAttributeCode());
                     break;
                 case 'boolean':
                     $value = (int)$product->getData($attribute->getAttributeCode());
