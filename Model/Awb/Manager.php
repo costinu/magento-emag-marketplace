@@ -37,7 +37,7 @@ use Zitec\EmagMarketplace\Model\Queue\Order\Importer;
  */
 class Manager
 {
-    const DIR_NAME = 'awb';
+    const DIR_NAME = 'zitec_emkp/awb';
 
     /**
      * @var Config
@@ -178,18 +178,20 @@ class Manager
     }
 
     /**
+     * Downloads the AWB PDF from eMAG (once) into var/zitec_emkp/awb/ - not web accessible, the AWB holds
+     * the customer's name, address and phone - and returns its path relative to var/.
+     *
      * @param int $id
      * @param string $format
      *
      * @return string
      * @throws AwbDownloadException
-     * @throws NoSuchEntityException
      */
-    public function getDownloadUrl(int $id, string $format): string
+    public function getPdfPath(int $id, string $format): string
     {
         $format = strtoupper($format);
 
-        if (!in_array($format, AwbModel::$sizes)) {
+        if (!in_array($format, AwbModel::$sizes, true)) {
             throw new AwbDownloadException(__('Invalid AWB format "%1".', $format));
         }
 
@@ -199,13 +201,11 @@ class Manager
             throw new AwbDownloadException(__('Invalid AWB.'));
         }
 
-        $directoryRead = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA);
+        $directory = $this->filesystem->getDirectoryWrite(DirectoryList::VAR_DIR);
         $filePath = self::DIR_NAME . '/' . $id . '_' . $format . '.pdf';
-        $completePath = $directoryRead->getAbsolutePath() . $filePath;
-        $url = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . $filePath;
 
-        if ($this->file->fileExists($completePath) && $directoryRead->isFile($completePath)) {
-            return $url;
+        if ($directory->isFile($filePath)) {
+            return $filePath;
         }
 
         $request = new ReadRequest([
@@ -215,19 +215,21 @@ class Manager
 
         try {
             $response = $this->apiClient->sendRequest($request);
-
-            if (!$directoryRead->isDirectory($directoryRead->getAbsolutePath() . self::DIR_NAME)) {
-                $this->file->mkdir($directoryRead->getAbsolutePath() . self::DIR_NAME);
-            }
-
-            $this->file->write($completePath, $response);
         } catch (\Throwable $exception) {
             $this->logger->critical($exception);
 
             throw new AwbDownloadException(__('The AWB could not be downloaded. Please check logs and try again.'));
         }
 
-        return $url;
+        if (!is_string($response) || strncmp($response, '%PDF-', 5) !== 0) {
+            $this->logger->critical('eMAG AWB ' . $id . ': the response is not a PDF.');
+
+            throw new AwbDownloadException(__('The AWB could not be downloaded. Please check logs and try again.'));
+        }
+
+        $directory->writeFile($filePath, $response);
+
+        return $filePath;
     }
 
     /**
