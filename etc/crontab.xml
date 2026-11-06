@@ -18,5 +18,9 @@
              method="execute">
             <schedule>6 4 * * 1</schedule>
         </job>
+        <job name="zitec_emagmarketplace_clean_request_logs" instance="Zitec\EmagMarketplace\Cron\CleanRequestLogs"
+             method="execute">
+            <schedule>17 3 * * *</schedule>
+        </job>
     </group>
 </config>
