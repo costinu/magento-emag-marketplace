@@ -17,6 +17,11 @@ use Zitec\EmagMarketplace\Api\Data\LocalityInterface;
 class Locality extends AbstractModel implements LocalityInterface
 {
     /**
+     * @var DateTime
+     */
+    protected $date;
+
+    /**
      *
      */
     protected function _construct()
@@ -38,8 +43,8 @@ class Locality extends AbstractModel implements LocalityInterface
         DateTime $date,
         Context $context,
         Registry $registry,
-        AbstractResource $resource = null,
-        AbstractDb $resourceCollection = null,
+        ?AbstractResource $resource = null,
+        ?AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);

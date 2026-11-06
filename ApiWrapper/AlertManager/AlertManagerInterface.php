@@ -17,5 +17,5 @@ interface AlertManagerInterface
      *
      * @return mixed
      */
-    public function alert(string $type, $message, AbstractRequest $request = null);
+    public function alert(string $type, $message, ?AbstractRequest $request = null);
 }

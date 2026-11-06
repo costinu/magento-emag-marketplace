@@ -49,7 +49,7 @@ class AlertManager implements AlertManagerInterface
      * @param AbstractRequest|null $request
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function alert(string $type, $message, AbstractRequest $request = null)
+    public function alert(string $type, $message, ?AbstractRequest $request = null)
     {
         $apiErrorEmails         = $this->config->getApiErrorEmail();
         $importOrderErrorEmails = $this->config->getImportErrorEmail();
@@ -67,6 +67,10 @@ class AlertManager implements AlertManagerInterface
                 $emailMessage = __('<p>Emag Marketplace Response: <strong>' . print_r($message,
                         true) . '</strong></p>');
                 break;
+
+            default:
+                $this->logger->critical('eMAG alert of unknown type ' . $type);
+                return;
         }
 
         if ($to) {

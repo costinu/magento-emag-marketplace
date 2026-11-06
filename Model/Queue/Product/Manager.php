@@ -68,7 +68,7 @@ class Manager
      * @return bool
      * @throws MissingProductDataException
      */
-    public function submitToQueue(Product $product, string $eventName = null): bool
+    public function submitToQueue(Product $product, ?string $eventName = null): bool
     {
         if (!($product->getTypeInstance() instanceof Product\Type\Simple)) {
             return false;
@@ -151,7 +151,7 @@ class Manager
      * @param null|string $eventName
      * @return string
      */
-    protected function determineAction(Product $product, string $eventName = null): string
+    protected function determineAction(Product $product, ?string $eventName = null): string
     {
         if ($eventName === 'catalog_product_delete_before' && $product->getData(ProductAttributes::IS_SENT)) {
             return ProductQueueItemInterface::ACTION_DELETE;

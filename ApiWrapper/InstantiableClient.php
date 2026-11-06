@@ -75,8 +75,8 @@ class InstantiableClient
         $apiUrl,
         $apiUsername,
         $apiPassword,
-        LoggerInterface $logger = null,
-        AlertManagerInterface $alertManager = null
+        ?LoggerInterface $logger = null,
+        ?AlertManagerInterface $alertManager = null
     ) {
         $this->apiUrl      = $apiUrl;
         $this->apiUsername = $apiUsername;
@@ -325,7 +325,7 @@ class InstantiableClient
         $baseUrl  = $this->apiUrl;
         $endpoint = $request->getEndpoint();
         if ($request instanceof ReadRequest) {
-            $baseUrl = str_replace('/api-3', null, $baseUrl);
+            $baseUrl = str_replace('/api-3', '', $baseUrl);
         }
 
         return $baseUrl . '/' . $endpoint;

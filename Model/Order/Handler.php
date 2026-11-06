@@ -152,7 +152,7 @@ class Handler
      * @param string|null $emagData
      * @throws OrderEditException
      */
-    public function beforeSave(Order $order, string $emagData = null)
+    public function beforeSave(Order $order, ?string $emagData = null)
     {
         if ($order->getStatus() && $order->getOrigData('status') && $order->getStatus() !== $order->getOrigData('status')) {
             if (!$this->isStatusChangeAllowed($order->getOrigData('status'), $order->getStatus())) {
@@ -195,7 +195,7 @@ class Handler
      * @param string|null $emagData
      * @throws OrderEditException
      */
-    protected function editEmagOrder(Order $order, string $emagData = null)
+    protected function editEmagOrder(Order $order, ?string $emagData = null)
     {
         // Get Original Order json
         if ($emagData) {

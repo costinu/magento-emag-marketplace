@@ -50,6 +50,7 @@ class ActiveShippingMethods implements ArrayInterface
 
         foreach ($activeCarriers as $carrierCode => $carrierModel) {
             $options = [];
+            $carrierTitle = $carrierCode;
             if ($carrierMethods = $carrierModel->getAllowedMethods()) {
                 foreach ($carrierMethods as $methodCode => $method) {
                     $code      = $carrierCode . '_' . $methodCode;

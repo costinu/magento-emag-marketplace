@@ -55,7 +55,7 @@ class Import extends Command
     /**
      *
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(self::COMMAND_NAME)
             ->setDescription('Import eMag orders.');
@@ -69,7 +69,7 @@ class Import extends Command
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $this->state->setAreaCode(Area::AREA_GLOBAL);
@@ -84,5 +84,7 @@ class Import extends Command
             $output->write('Error: ' . $exception->getMessage());
             $this->logger->critical($exception);
         }
+
+        return \Symfony\Component\Console\Command\Command::SUCCESS;
     }
 }

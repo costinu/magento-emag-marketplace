@@ -72,7 +72,7 @@ class Config
      *
      * @return string
      */
-    public function getApiUrl(int $storeId = null): string
+    public function getApiUrl(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_API_URL, $storeId);
     }
@@ -82,7 +82,7 @@ class Config
      *
      * @return string
      */
-    public function getApiUsername(int $storeId = null): string
+    public function getApiUsername(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_API_USERNAME, $storeId);
     }
@@ -92,7 +92,7 @@ class Config
      *
      * @return string
      */
-    public function getApiPassword(int $storeId = null): string
+    public function getApiPassword(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_API_PASSWORD, $storeId);
     }
@@ -102,7 +102,7 @@ class Config
      *
      * @return string
      */
-    public function getLocale(int $storeId = null): string
+    public function getLocale(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_API_LOCALE, $storeId);
     }
@@ -112,7 +112,7 @@ class Config
      *
      * @return string
      */
-    public function getCurrency(int $storeId = null): string
+    public function getCurrency(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_API_CURRENCY, $storeId);
     }
@@ -122,7 +122,7 @@ class Config
      *
      * @return int
      */
-    public function getQueueLimit(int $storeId = null): int
+    public function getQueueLimit(?int $storeId = null): int
     {
         return (int)$this->getValue(self::XML_PATH_QUEUE_LIMIT, $storeId);
     }
@@ -132,7 +132,7 @@ class Config
      *
      * @return int
      */
-    public function getHandlingTime(int $storeId = null): int
+    public function getHandlingTime(?int $storeId = null): int
     {
         return (int)$this->getValue(self::XML_PATH_HANDLING_TIME, $storeId);
     }
@@ -142,7 +142,7 @@ class Config
      *
      * @return float
      */
-    public function getVatRate(int $storeId = null): float
+    public function getVatRate(?int $storeId = null): float
     {
         return (float)$this->getValue(self::XML_PATH_VAT_RATE, $storeId);
     }
@@ -152,7 +152,7 @@ class Config
      *
      * @return int
      */
-    public function getMinSalePrice(int $storeId = null): int
+    public function getMinSalePrice(?int $storeId = null): int
     {
         return (int)$this->getValue(self::XML_PATH_MIN_SALE_PRICE, $storeId);
     }
@@ -162,7 +162,7 @@ class Config
      *
      * @return int
      */
-    public function getMaxSalePrice(int $storeId = null): int
+    public function getMaxSalePrice(?int $storeId = null): int
     {
         return (int)$this->getValue(self::XML_PATH_MAX_SALE_PRICE, $storeId);
     }
@@ -172,7 +172,7 @@ class Config
      *
      * @return string
      */
-    public function getInitialOrderStatus(int $storeId = null): string
+    public function getInitialOrderStatus(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_ORDER_STATUS_INITIAL, $storeId);
     }
@@ -182,7 +182,7 @@ class Config
      *
      * @return string
      */
-    public function getFinalizedOrderStatus(int $storeId = null): string
+    public function getFinalizedOrderStatus(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_ORDER_STATUS_FINALIZED, $storeId);
     }
@@ -192,7 +192,7 @@ class Config
      *
      * @return string
      */
-    public function getCancelledOrderStatus(int $storeId = null): string
+    public function getCancelledOrderStatus(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_ORDER_STATUS_CANCELLED, $storeId);
     }
@@ -202,7 +202,7 @@ class Config
      *
      * @return string
      */
-    public function getApiErrorEmail(int $storeId = null): string
+    public function getApiErrorEmail(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_ALERTS_ERROR_EMAIL, $storeId);
     }
@@ -212,7 +212,7 @@ class Config
      *
      * @return string
      */
-    public function getCashOnDeliver(int $storeId = null): string
+    public function getCashOnDeliver(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_PAYMENT_CASH_ON_DELIVERY, $storeId);
     }
@@ -222,7 +222,7 @@ class Config
      *
      * @return string
      */
-    public function getBankTransfer(int $storeId = null): string
+    public function getBankTransfer(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_PAYMENT_BANK_TRANSFER, $storeId);
     }
@@ -232,7 +232,7 @@ class Config
      *
      * @return string
      */
-    public function getOnlineCardPayment(int $storeId = null): string
+    public function getOnlineCardPayment(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_PAYMENT_ONLINE_CARD, $storeId);
     }
@@ -242,7 +242,7 @@ class Config
      *
      * @return string
      */
-    public function getShippingMethod(int $storeId = null): string
+    public function getShippingMethod(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_SHIPPING_METHOD, $storeId);
     }
@@ -252,7 +252,7 @@ class Config
      *
      * @return string
      */
-    public function getShippingName(int $storeId = null): string
+    public function getShippingName(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_SHIPPING_NAME, $storeId);
     }
@@ -270,7 +270,7 @@ class Config
      *
      * @return string
      */
-    public function getShippingPhoneOne(int $storeId = null): string
+    public function getShippingPhoneOne(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_SHIPPING_PHONE1, $storeId);
     }
@@ -280,7 +280,7 @@ class Config
      *
      * @return string
      */
-    public function getShippingPhoneTwo(int $storeId = null): string
+    public function getShippingPhoneTwo(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_SHIPPING_PHONE2, $storeId);
     }
@@ -290,7 +290,7 @@ class Config
      *
      * @return int
      */
-    public function getShippingLocality(int $storeId = null): int
+    public function getShippingLocality(?int $storeId = null): int
     {
         return (int)$this->getValue(self::XML_PATH_SHIPPING_LOCALITY, $storeId);
     }
@@ -300,7 +300,7 @@ class Config
      *
      * @return string
      */
-    public function getShippingStreet(int $storeId = null): string
+    public function getShippingStreet(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_SHIPPING_STREET, $storeId);
     }
@@ -318,7 +318,7 @@ class Config
      *
      * @return string
      */
-    public function getImportErrorEmail(int $storeId = null): string
+    public function getImportErrorEmail(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_ALERTS_IMPORT_ERROR_EMAIL, $storeId);
     }
@@ -339,7 +339,7 @@ class Config
      *
      * @return mixed
      */
-    protected function getValue(string $field, int $storeId = null)
+    protected function getValue(string $field, ?int $storeId = null)
     {
         return $this->config->getValue($field, ScopeInterface::SCOPE_STORE, $storeId);
     }

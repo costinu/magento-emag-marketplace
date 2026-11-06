@@ -184,8 +184,8 @@ class Importer
 
                 // Stop here if error or no results
                 if (!$response || $response['isError'] || empty($response['results'])) {
-                    throw new \LocalizedException(
-                        __('Empty order data, for eMAG order id: ') . $queueItem->getEmagId()
+                    throw new \Magento\Framework\Exception\LocalizedException(
+                        __('Empty order data, for eMAG order id: %1', $queueItem->getEmagId())
                     );
                 }
 
@@ -245,7 +245,7 @@ class Importer
      *
      * @return string
      */
-    protected function saveData(array $data, Order $existingOrder = null): string
+    protected function saveData(array $data, ?Order $existingOrder = null): string
     {
         $store = $this->storeManager->getStore();
         $websiteId = $this->storeManager->getStore()->getWebsiteId();
@@ -576,7 +576,7 @@ class Importer
      *
      * @return array
      */
-    protected function extractName(string $fullName = null): array
+    protected function extractName(?string $fullName = null): array
     {
         $name = explode(' ', $fullName);
 

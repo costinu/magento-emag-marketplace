@@ -65,7 +65,7 @@ class Send extends Command
     /**
      *
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(self::COMMAND_NAME)
             ->setDescription('Send product offers to eMag Marketplace.');
@@ -79,7 +79,7 @@ class Send extends Command
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $this->state->setAreaCode(Area::AREA_GLOBAL);
@@ -99,5 +99,7 @@ class Send extends Command
             }
         }
         $output->writeln(date('H:i:s') . ' Finished sending products.');
+
+        return \Symfony\Component\Console\Command\Command::SUCCESS;
     }
 }

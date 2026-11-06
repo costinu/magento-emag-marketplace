@@ -17,7 +17,7 @@ class NullManager implements AlertManagerInterface
      *
      * @return null
      */
-    public function alert(string $type, $message, AbstractRequest $request = null)
+    public function alert(string $type, $message, ?AbstractRequest $request = null)
     {
         return null;
     }

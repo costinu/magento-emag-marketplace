@@ -38,8 +38,8 @@ class Collection extends AwbCollection
         FetchStrategyInterface $fetchStrategy,
         ManagerInterface $eventManager,
         Registry $registry,
-        AdapterInterface $connection = null,
-        AbstractDb $resource = null
+        ?AdapterInterface $connection = null,
+        ?AbstractDb $resource = null
     ) {
         $this->registry = $registry;
         parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $connection, $resource);

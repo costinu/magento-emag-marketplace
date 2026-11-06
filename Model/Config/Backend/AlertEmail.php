@@ -19,21 +19,17 @@ class AlertEmail extends Value
         $value = $this->getValue();
 
         if (empty($value)) {
-            return;
+            return parent::beforeSave();
         }
 
-        $emails = explode(',', $value);
-        
-        if (!$emails) {
-            return;
-        }
-
-        foreach ($emails as $email) {
-            if (!\Zend_Validate::is(trim($email), 'EmailAddress')) {
+        foreach (explode(',', (string) $value) as $email) {
+            if (filter_var(trim($email), FILTER_VALIDATE_EMAIL) === false) {
                 throw new LocalizedException(
                     __('Please enter valid email addresses, separated by comma.')
                 );
             }
         }
+
+        return parent::beforeSave();
     }
 }

@@ -27,6 +27,11 @@ class LocalityRepository implements LocalityRepositoryInterface
     protected $localityCollectionFactory;
 
     /**
+     * @var ApiClient
+     */
+    protected $apiClient;
+
+    /**
      * @var DateTime
      */
     protected $date;

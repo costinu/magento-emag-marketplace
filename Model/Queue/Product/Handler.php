@@ -241,7 +241,7 @@ class Handler
      * @param null|string $response
      * @throws \Exception
      */
-    protected function updateItem(Item $item, string $state = null, string $response = null)
+    protected function updateItem(Item $item, ?string $state = null, ?string $response = null)
     {
         if (!$state && !$response) {
             return;
@@ -520,5 +520,7 @@ class Handler
 
             return $priceExcludingTax;
         }
+
+        return (float) ($priceType == 'sale' ? $product->getFinalPrice() : $product->getPrice());
     }
 }

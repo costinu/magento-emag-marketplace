@@ -62,6 +62,6 @@ class Import extends Action
 		else
 			$this->messageManager->addError(__('An error occurred. Please check logs.'));
 		
-		$this->_redirect('emagmarketplace/mapping/index');
+		return $this->resultRedirectFactory->create()->setPath('emagmarketplace/mapping/index');
     }
 }

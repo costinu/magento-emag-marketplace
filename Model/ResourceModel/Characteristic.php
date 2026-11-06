@@ -41,7 +41,7 @@ class Characteristic extends AbstractDb
      * @param array|null $exceptedIds
      * @return mixed
      */
-    public function emptyTable(array $exceptedIds = null)
+    public function emptyTable(?array $exceptedIds = null)
     {
         $select = $this->connection->select();
         $select->from(

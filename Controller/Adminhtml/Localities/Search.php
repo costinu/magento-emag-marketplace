@@ -105,31 +105,4 @@ class Search extends Action
             ]);
         }
     }
-
-    /**
-     *
-     */
-    protected function fetchData()
-    {
-        $this->apiClient->setArrayResponse(true);
-        $result = $this->apiClient->sendRequest($this->countRequest);
-
-        $requestsList = [];
-        $noOfPages = $result['results']['noOfPages'];
-
-        for ($i = 1; $i <= $noOfPages; $i++) {
-            $requestsList[] = new ReadRequest([
-                'currentPage' => $i,
-                'itemsPerPage' => $result['results']['itemsPerPage'],
-            ]);
-        }
-        $results = $this->apiClient->sendMultiRequest($requestsList);
-
-        $localities = array_column($results, 'results');
-        $localities = array_merge(... $localities);
-
-        unset($results);
-
-        $this->localities = $localities;
-    }
 }

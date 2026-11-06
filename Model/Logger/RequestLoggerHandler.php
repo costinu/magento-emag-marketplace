@@ -27,7 +27,7 @@ class RequestLoggerHandler extends Base
      * @param string|null $filePath
      * @param string|null $fileName
      */
-    public function __construct(DriverInterface $filesystem, string $filePath = null, string $fileName = null)
+    public function __construct(DriverInterface $filesystem, ?string $filePath = null, ?string $fileName = null)
     {
         if (!$fileName) {
             $fileName = sprintf(self::LOG_FILENAME_FORMAT, date('d'), date('m'), date('Y'));

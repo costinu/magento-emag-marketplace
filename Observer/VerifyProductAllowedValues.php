@@ -2,7 +2,7 @@
 
 namespace Zitec\EmagMarketplace\Observer;
 
-use Braintree\Exception;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute;
 use Magento\Framework\App\State;
 use Magento\Framework\Event\Observer;
@@ -95,13 +95,13 @@ class VerifyProductAllowedValues implements ObserverInterface
 
     /**
      * @param Observer $observer
-     * @throws Exception
+     * @throws LocalizedException
      */
     public function execute(Observer $observer)
     {
         try {
             $areaCode = $this->state->getAreaCode();
-        } catch (\LocalizedException $exception) {
+        } catch (LocalizedException $exception) {
             $areaCode = null;
         }
 
@@ -131,7 +131,7 @@ class VerifyProductAllowedValues implements ObserverInterface
             $this->messageManager->addErrorMessage(__('Product is not assigned to an eMAG mapped Category.'));
             $this->messageManager->addErrorMessage(__('It can not be published in eMAG Marketplace.'));
             $this->messageManager->addWarningMessage(__('The product has not been set as "Visible in eMAG Marketplace".'));
-            throw new Exception(__('Please correct this issue and set "Visible in eMAG Marketplace" to "Yes" and save the product again in order to publish this product in eMAG Marketplace.'));
+            throw new LocalizedException(__('Please correct this issue and set "Visible in eMAG Marketplace" to "Yes" and save the product again in order to publish this product in eMAG Marketplace.'));
         }
 
         $characteristicMappings = $this->characteristicMappingRepository->getByMapping($categoryMapping);
@@ -177,7 +177,7 @@ class VerifyProductAllowedValues implements ObserverInterface
                     $this->messageManager->addWarningMessage(__('Allowed values:'));
                     $this->messageManager->addWarningMessage(implode(', ', $characteristicValues));
 
-                    throw new Exception(
+                    throw new LocalizedException(
                         __(
                             'Value is not allowed for characteristic %1, mapped to %2 attribute.',
                             str_replace(':', '', $characteristic->getName()),
@@ -186,7 +186,7 @@ class VerifyProductAllowedValues implements ObserverInterface
                     );
                 }
             } elseif ($characteristic->isMandatory()) {
-                throw new Exception(
+                throw new LocalizedException(
                     __(
                         'Characteristic %1 is mandatory. Please verify characteristic mapping.',
                         $characteristic->getName()
