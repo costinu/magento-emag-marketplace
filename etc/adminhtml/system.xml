@@ -57,9 +57,10 @@
                     <label>Username</label>
                     <validate>required-entry</validate>
                 </field>
-                <field id="api_password" translate="label" type="password" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="api_password" translate="label" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Password</label>
                     <validate>required-entry</validate>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
                 <field id="locale" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <source_model>Zitec\EmagMarketplace\Model\Config\Source\Locale</source_model>
@@ -135,6 +136,24 @@
                     <label>Canceled Order Status</label>
                     <source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
                     <validate>required-entry</validate>
+                </field>
+                <field id="callback_key" translate="label comment" type="obscure" sortOrder="40" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Order Callback Key</label>
+                    <comment>Secret part of the order callback URL. Leave empty and save to generate a new key (then update the URL in eMAG).</comment>
+                    <backend_model>Zitec\EmagMarketplace\Model\Config\Backend\CallbackKey</backend_model>
+                </field>
+                <field id="callback_url" translate="label comment" type="label" sortOrder="41" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Order Callback URL</label>
+                    <comment>Set it in eMAG Marketplace: Profile > Technical details > Order callback URL. eMAG appends ?order_id=N.</comment>
+                    <frontend_model>Zitec\EmagMarketplace\Block\Adminhtml\System\Config\CallbackUrl</frontend_model>
+                </field>
+                <field id="import_batch_size" translate="label comment" type="text" sortOrder="50" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Orders Imported per Cron Run</label>
+                    <comment>Queued eMAG orders read from the API every 15 minutes (1 - 200).</comment>
+                    <validate>validate-digits validate-digits-range digits-range-1-200</validate>
                 </field>
             </group>
         </section>
@@ -247,6 +266,28 @@
                     <label>Import Order Email</label>
                     <backend_model>Zitec\EmagMarketplace\Model\Config\Backend\AlertEmail</backend_model>
                     <comment>You can add multiple email addresses, separated by comma.</comment>
+                </field>
+                <field id="max_emails_per_hour" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Maximum Alert E-mails per Hour</label>
+                    <comment>Per alert type; further alerts in the same hour are only logged. 0 = no limit.</comment>
+                    <validate>validate-digits</validate>
+                </field>
+            </group>
+            <group id="logging_group" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0"
+                   showInStore="0">
+                <label>API Request Log</label>
+                <field id="log_requests" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Log API Requests</label>
+                    <comment>Requests and responses in var/log/zitec_emkp/, with customer data masked. For debugging only.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="retention_days" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Keep Logs (days)</label>
+                    <comment>Older request logs are deleted daily.</comment>
+                    <validate>validate-digits validate-greater-than-zero</validate>
                 </field>
             </group>
         </section>

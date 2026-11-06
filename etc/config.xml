@@ -3,11 +3,29 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <api_settings>
+            <api_group>
+                <api_password backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+            </api_group>
             <settings>
                 <enable>1</enable>
                 <display_text>API Settings</display_text>
             </settings>
         </api_settings>
+        <orders_settings>
+            <orders_group>
+                <callback_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+                <import_batch_size>20</import_batch_size>
+            </orders_group>
+        </orders_settings>
+        <alerts_settings>
+            <alerts_group>
+                <max_emails_per_hour>10</max_emails_per_hour>
+            </alerts_group>
+            <logging_group>
+                <log_requests>0</log_requests>
+                <retention_days>14</retention_days>
+            </logging_group>
+        </alerts_settings>
         <shipping_settings>
             <shipping_group>
                 <name>AUTO-GENERATED</name>

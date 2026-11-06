@@ -32,4 +32,19 @@ interface QueueOrderRepositoryInterface
      * @return AbstractCollection|Collection
      */
     public function getByStatus(string $status): Collection;
+
+    /**
+     * @param string $status
+     * @return int
+     */
+    public function countByStatus(string $status): int;
+
+    /**
+     * Oldest items with the given status first.
+     *
+     * @param string $status
+     * @param int $limit
+     * @return Collection
+     */
+    public function getBatchByStatus(string $status, int $limit): Collection;
 }

@@ -176,7 +176,12 @@ class Importer
      */
     public function importOrders()
     {
-        $orderCollection = $this->repository->getByStatus(OrderQueueItemInterface::STATUS_PENDING);
+        // A batch per run (oldest first); each item is saved right after it is processed, so a failure
+        // further down does not lose the state of the orders already imported.
+        $orderCollection = $this->repository->getBatchByStatus(
+            OrderQueueItemInterface::STATUS_PENDING,
+            $this->config->getOrderImportBatchSize()
+        );
 
         foreach ($orderCollection as $queueItem) {
             try {
@@ -192,7 +197,8 @@ class Importer
                 $importedOrder = reset($response['results']);
                 $orderId = $this->insertUpdateOrder($importedOrder);
 
-                $queueItem->setMessage(Json::json_encode($response));
+                // The full response holds the customer's personal data (already saved on the order).
+                $queueItem->setMessage('Order read from eMAG');
 
                 if ($orderId) {
                     $queueItem->setStatus(OrderQueueItemInterface::STATUS_SYNCHRONISED);
@@ -205,15 +211,16 @@ class Importer
             } catch (\Throwable $exception) {
                 $this->alertManager->alert(
                     'curl_error',
-                    __($exception->getMessage()) . $exception->getMessage()
+                    __('eMAG order %1 could not be imported: %2', $queueItem->getEmagId(), $exception->getMessage())
                 );
 
                 $this->logger->critical($exception);
                 $queueItem->setStatus(OrderQueueItemInterface::STATUS_FAILED);
+                $queueItem->setMessage(mb_substr($exception->getMessage(), 0, 1000));
             }
-        }
 
-        $orderCollection->save();
+            $queueItem->save();
+        }
     }
 
     /**

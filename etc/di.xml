@@ -15,6 +15,15 @@
         </arguments>
     </type>
 
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="api_settings/api_group/api_username" xsi:type="string">1</item>
+                <item name="api_settings/api_group/api_password" xsi:type="string">1</item>
+                <item name="orders_settings/orders_group/callback_key" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">

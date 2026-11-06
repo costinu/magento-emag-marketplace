@@ -82,4 +82,23 @@ class Repository implements QueueOrderRepositoryInterface
         return $this->collectionFactory->create()
                                        ->addFieldToFilter(OrderQueueItemInterface::STATUS, $status);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function countByStatus(string $status): int
+    {
+        return $this->getByStatus($status)->getSize();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBatchByStatus(string $status, int $limit): Collection
+    {
+        return $this->getByStatus($status)
+            ->setOrder(OrderQueueItemInterface::ID, Collection::SORT_ORDER_ASC)
+            ->setPageSize($limit)
+            ->setCurPage(1);
+    }
 }

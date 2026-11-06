@@ -42,6 +42,13 @@ class Config
 
     const XML_PATH_ALERTS_ERROR_EMAIL = 'alerts_settings/alerts_group/api_error_email';
     const XML_PATH_ALERTS_IMPORT_ERROR_EMAIL = 'alerts_settings/alerts_group/import_error_email';
+    const XML_PATH_ALERTS_MAX_PER_HOUR = 'alerts_settings/alerts_group/max_emails_per_hour';
+
+    const XML_PATH_ORDER_CALLBACK_KEY = 'orders_settings/orders_group/callback_key';
+    const XML_PATH_ORDER_IMPORT_BATCH_SIZE = 'orders_settings/orders_group/import_batch_size';
+
+    const XML_PATH_LOG_REQUESTS = 'alerts_settings/logging_group/log_requests';
+    const XML_PATH_LOG_RETENTION_DAYS = 'alerts_settings/logging_group/retention_days';
 
     /**
      * @var array
@@ -321,6 +328,56 @@ class Config
     public function getImportErrorEmail(?int $storeId = null): string
     {
         return (string)$this->getValue(self::XML_PATH_ALERTS_IMPORT_ERROR_EMAIL, $storeId);
+    }
+
+    /**
+     * Secret part of the order callback URL (decrypted by the backend model declared in config.xml).
+     *
+     * @return string
+     */
+    public function getCallbackKey(): string
+    {
+        return trim((string)$this->config->getValue(self::XML_PATH_ORDER_CALLBACK_KEY));
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderImportBatchSize(): int
+    {
+        $size = (int)$this->config->getValue(self::XML_PATH_ORDER_IMPORT_BATCH_SIZE);
+
+        return $size > 0 ? min($size, 200) : 20;
+    }
+
+    /**
+     * Maximum alert e-mails per type and hour (0 = unlimited).
+     *
+     * @return int
+     */
+    public function getMaxAlertEmailsPerHour(): int
+    {
+        $value = $this->config->getValue(self::XML_PATH_ALERTS_MAX_PER_HOUR);
+
+        return $value === null || $value === '' ? 10 : max(0, (int)$value);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRequestLogEnabled(): bool
+    {
+        return $this->config->isSetFlag(self::XML_PATH_LOG_REQUESTS);
+    }
+
+    /**
+     * @return int
+     */
+    public function getLogRetentionDays(): int
+    {
+        $days = (int)$this->config->getValue(self::XML_PATH_LOG_RETENTION_DAYS);
+
+        return $days > 0 ? $days : 14;
     }
 
     /**
