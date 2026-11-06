@@ -7,6 +7,7 @@ use Magento\Framework\App\State;
 use Psr\Log\LoggerInterface;
 use Zitec\EmagMarketplace\Model\AlertManager;
 use Zitec\EmagMarketplace\Model\Queue\Order\Importer;
+use Zitec\EmagMarketplace\Model\Queue\Order\Poller;
 
 /**
  * Class ImportOrders
@@ -30,6 +31,11 @@ class ImportOrders
     protected $alertManager;
 
     /**
+     * @var Poller
+     */
+    protected $poller;
+
+    /**
      * ImportOrders constructor.
      *
      * @param State $state
@@ -41,8 +47,10 @@ class ImportOrders
         State $state,
         Importer $importer,
         LoggerInterface $logger,
-        AlertManager $alertManager
+        AlertManager $alertManager,
+        Poller $poller
     ) {
+        $this->poller = $poller;
         try {
             $state->setAreaCode(Area::AREA_CRONTAB);
         } catch (\Throwable$exception) {
@@ -59,12 +67,18 @@ class ImportOrders
     public function execute()
     {
         try {
+            $this->poller->poll();
+        } catch (\Throwable $exception) {
+            $this->logger->error('eMAG order polling: ' . $exception->getMessage());
+        }
+
+        try {
             $this->importer->importOrders();
         } catch (\Throwable $exception) {
             $this->alertManager->alert(
                 'curl_error',
-                __($exception->getMessage()) . $exception->getMessage()
-                );
+                __('eMAG order import failed: %1', $exception->getMessage())
+            );
             $this->logger->critical($exception);
         }
     }

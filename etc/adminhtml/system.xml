@@ -149,6 +149,12 @@
                     <comment>Set it in eMAG Marketplace: Profile > Technical details > Order callback URL. eMAG appends ?order_id=N.</comment>
                     <frontend_model>Zitec\EmagMarketplace\Block\Adminhtml\System\Config\CallbackUrl</frontend_model>
                 </field>
+                <field id="polling_enabled" translate="label comment" type="select" sortOrder="45" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Check New Orders in eMAG</label>
+                    <comment>Before each import (every 15 minutes) read the new eMAG orders and queue the ones the callback missed.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="import_batch_size" translate="label comment" type="text" sortOrder="50" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <label>Orders Imported per Cron Run</label>

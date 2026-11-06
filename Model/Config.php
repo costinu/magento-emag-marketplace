@@ -46,6 +46,7 @@ class Config
 
     const XML_PATH_ORDER_CALLBACK_KEY = 'orders_settings/orders_group/callback_key';
     const XML_PATH_ORDER_IMPORT_BATCH_SIZE = 'orders_settings/orders_group/import_batch_size';
+    const XML_PATH_ORDER_POLLING = 'orders_settings/orders_group/polling_enabled';
 
     const XML_PATH_LOG_REQUESTS = 'alerts_settings/logging_group/log_requests';
     const XML_PATH_LOG_RETENTION_DAYS = 'alerts_settings/logging_group/retention_days';
@@ -348,6 +349,14 @@ class Config
         $size = (int)$this->config->getValue(self::XML_PATH_ORDER_IMPORT_BATCH_SIZE);
 
         return $size > 0 ? min($size, 200) : 20;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOrderPollingEnabled(): bool
+    {
+        return $this->config->isSetFlag(self::XML_PATH_ORDER_POLLING);
     }
 
     /**
