@@ -17,7 +17,7 @@ use Zitec\EmagMarketplace\Model\Awb\Manager;
  */
 class Download extends Action
 {
-    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::emkp';
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::awb';
 
     /**
      * @var Manager

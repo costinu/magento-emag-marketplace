@@ -18,7 +18,7 @@ use Zitec\EmagMarketplace\Model\MappingManager;
  */
 class Save extends Action
 {
-    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::emkp';
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::mapping';
 
     /**
      * @var JsonFactory

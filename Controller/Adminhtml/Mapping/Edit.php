@@ -12,7 +12,7 @@ use Magento\Framework\Controller\ResultInterface;
  */
 class Edit extends Action
 {
-    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::emkp';
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::mapping';
 
     /**
      * @return ResponseInterface|ResultInterface|void

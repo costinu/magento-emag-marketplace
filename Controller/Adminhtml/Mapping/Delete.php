@@ -14,7 +14,7 @@ use Zitec\EmagMarketplace\Api\CategoryMappingRepositoryInterface;
  */
 class Delete extends Action
 {
-    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::emkp';
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::mapping';
 
     /**
      * @var CategoryMappingRepositoryInterface

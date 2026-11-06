@@ -15,7 +15,7 @@ use Magento\Framework\View\Result\PageFactory;
  */
 class Index extends Action
 {
-    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::emkp';
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::mapping';
 
     /**
      * @var PageFactory

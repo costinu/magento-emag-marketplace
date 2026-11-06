@@ -18,7 +18,7 @@ use Zitec\EmagMarketplace\Model\Config;
  */
 class Save extends Action
 {
-    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::emkp';
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::awb';
 
     /**
      * @var Config

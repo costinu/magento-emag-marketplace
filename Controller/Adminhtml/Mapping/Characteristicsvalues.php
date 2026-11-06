@@ -15,6 +15,8 @@ use Zitec\EmagMarketplace\Api\CharacteristicRepositoryInterface;
  */
 class Characteristicsvalues extends Action
 {
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::mapping';
+
     /**
      * @var JsonFactory
      */

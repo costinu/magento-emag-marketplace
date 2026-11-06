@@ -15,6 +15,8 @@ use Zitec\EmagMarketplace\Api\LocalityRepositoryInterface;
  */
 class Search extends Action
 {
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::awb';
+
     /**
      * @var LocalityRepositoryInterface
      */

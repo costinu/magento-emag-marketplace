@@ -19,7 +19,7 @@ use Zitec\EmagMarketplace\Block\Adminhtml\Mapping\Edit\Form\Category as Category
  */
 class Create extends Action
 {
-    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::emkp';
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::mapping';
 
     /**
      * @var PageFactory

@@ -25,6 +25,8 @@ use Zitec\EmagMarketplace\Model\OrderAttributes;
  */
 class Upload extends Action
 {
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::invoice';
+
     const DIR_NAME = 'invoices';
 
     /**

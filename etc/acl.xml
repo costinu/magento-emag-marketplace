@@ -5,6 +5,21 @@
             <resource id="Magento_Backend::admin">
                 <resource id="Zitec_EmagMarketplace::emkp" title="Emag Marketplace">
                     <resource id="Zitec_EmagMarketplace::mapping" title="Category &amp; Characteristics Mappings" sortOrder="1"/>
+                    <resource id="Zitec_EmagMarketplace::awb" title="Generate and Download AWBs" sortOrder="2"/>
+                    <resource id="Zitec_EmagMarketplace::invoice" title="Upload Invoices" sortOrder="3"/>
+                    <resource id="Zitec_EmagMarketplace::localities" title="Import Localities" sortOrder="4"/>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Zitec_EmagMarketplace::api_configuration" title="eMAG Marketplace API Settings"/>
+                            <resource id="Zitec_EmagMarketplace::products_settings" title="eMAG Marketplace Products Settings"/>
+                            <resource id="Zitec_EmagMarketplace::orders_settings" title="eMAG Marketplace Orders Settings"/>
+                            <resource id="Zitec_EmagMarketplace::payments_settings" title="eMAG Marketplace Payments Settings"/>
+                            <resource id="Zitec_EmagMarketplace::shipping_settings" title="eMAG Marketplace Shipping Settings"/>
+                            <resource id="Zitec_EmagMarketplace::alerts_settings" title="eMAG Marketplace Alerts Settings"/>
+                        </resource>
+                    </resource>
                 </resource>
             </resource>
         </resources>

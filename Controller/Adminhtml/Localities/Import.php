@@ -15,6 +15,8 @@ use Zitec\EmagMarketplace\Api\LocalityRepositoryInterface;
  */
 class Import extends Action
 {
+    const ADMIN_RESOURCE = 'Zitec_EmagMarketplace::localities';
+
     /**
      * @var LoggerInterface
      */
